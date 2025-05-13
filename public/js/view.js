@@ -26,7 +26,8 @@ function formatPercentage(value) {
 
 function loadRecords() {
   console.log("🔁 loadRecords() triggered");
-  fetch('http://localhost:3000/api/financial-analysis')
+  //fetch('http://localhost:3000/api/financial-analysis')
+  fetch('/api/financial-analysis')
     .then(res => res.json())
     .then(data => {
       const tableBody = document.querySelector('#data-body');
@@ -82,7 +83,7 @@ function bindDeleteButtons() {
       if (!confirmed) return;
 
       try {
-        const res = await fetch(`http://localhost:3000/api/financial-analysis/${id}`, {
+        const res = await fetch(`/api/financial-analysis/${id}`, {
           method: 'DELETE'
         });
 
@@ -121,7 +122,7 @@ async function importData(form) {
     };
   
     try {
-      const res = await fetch('http://localhost:3000/api/financial-analysis', {
+      const res = await fetch('/api/financial-analysis', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

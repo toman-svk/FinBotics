@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 // Register API routes
 const financialAnalysisRoutes = require('./src/routes/financialAnalysisRoutes');
 app.use('/api/financial-analysis', financialAnalysisRoutes);
