@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinBotics - Data Overview</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="layout">
+    
+    <!-- 🔴 Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">📊 <strong>FinBotics</strong></div>
+      <ul class="nav">
+        <li><a href="dashboard.html">Dashboard</a>
+          <ul class="sub-nav">
+            <li><a href="#">Assets</a></li>
+            <li><a href="#">Liabilities</a></li>
+            <li><a href="#">Profitability</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Benchmarks</a></li>
+        <li><a href="#" class="active">Data overview</a></li>
+          <ul class="sub-nav">
+            <li><a href="#">Import</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+        <li class="settings-link"><a href="#">Settings</a></li>
+      </ul>
+      
+    </aside>
+
+    <!-- 🟢 Topbar -->
+    <header class="topbar">
+      <p>...\ Data overview</p>
+      <div class="action-buttons">
+        <button class="action-btn">Import</button>
+        <button class="action-btn">Export</button>
+      </div>
+    </header>
+
+    <!-- 🔵 Main Content -->
+    <main class="main-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Actions</th>
+              <th>ID</th>
+              <th>Period</th>
+              <th>Size</th>
+              <th>Industry</th>
+              <th>Current Assets</th>
+              <th>Total Assets</th>
+              <th>Current Liabilities</th>
+              <th>Total Liabilities</th>
+              <th>Shareholders Equity</th>
+              <th>Revenue</th>
+              <th>Net Income</th>
+              <th>Current Ratio</th>
+              <th>Net Profit Margin</th>
+              <th>ROA</th>
+              <th>Debt to Equity</th>
+              <th>ROE</th>
+              <th>Financial Health</th>
+              <th>Is Validated</th>
+            </tr>
+          </thead>
+          <tbody id="data-body">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+  </div>
+
+  <div id="modal-container"></div>
+
+  <script src="js/view.js"></script>
+
+  <script>
+    fetch('partials/importModal.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('modal-container').innerHTML = html;
+        setupImportModal();
+        setupFormSubmission();
+      });
+  </script>
+
+  
+</body>
+</html>

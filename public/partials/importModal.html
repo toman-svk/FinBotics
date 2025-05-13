@@ -1,0 +1,86 @@
+<div id="importModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Import Data</h2>
+  
+      <form id="importForm">
+        <!-- File Upload -->
+        <label for="fileUpload">Upload CSV or Excel file:</label>
+        <input type="file" id="fileUpload" name="fileUpload" accept=".csv, .xlsx" />
+  
+        <hr style="margin: 20px 0;" />
+  
+        <!-- Manual Entry -->
+        <h3 style="margin-top: 0;">Or input manually:</h3>
+  
+        <label for="company_size">Company size:</label>
+        <select id="company_size" name="company_size" required>
+          <option>Small</option>
+          <option>Medium</option>
+          <option>Big</option>
+        </select>
+  
+        <label for="company_industry">Company industry:</label>
+        <select id="company_industry" name="company_industry" required>
+          <option>Food</option>
+          <option>Obchod</option>
+          <option>Software</option>
+        </select>
+  
+        <!-- Period -->
+        <label for="year">Year:</label>
+        <select id="year" name="year" required>
+          <option>2023</option>
+          <option>2024</option>
+          <option>2025</option>
+          <option>2026</option>
+          <option>2027</option>
+          <option>2028</option>
+        </select>
+  
+        <label for="month">Month:</label>
+        <select id="month" name="month" required>
+          <option value="">Select Month</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+  
+        <!-- Financial Fields -->
+        <label for="current_assets">Current Assets:</label>
+        <input type="number" id="current_assets" name="current_assets" required />
+  
+        <label for="total_assets">Total Assets:</label>
+        <input type="number" id="total_assets" name="total_assets" required />
+  
+        <label for="current_liabilities">Current Liabilities:</label>
+        <input type="number" id="current_liabilities" name="current_liabilities" required />
+  
+        <label for="total_liabilities">Total Liabilities:</label>
+        <input type="number" id="total_liabilities" name="total_liabilities" required />
+  
+        <label for="shareholders_equity">Shareholders Equity:</label>
+        <input type="number" id="shareholders_equity" name="shareholders_equity" required />
+  
+        <label for="revenue">Revenue:</label>
+        <input type="number" id="revenue" name="revenue" required />
+  
+        <label for="net_income">Net Income:</label>
+        <input type="number" id="net_income" name="net_income" required />
+  
+        <div class="modal-buttons">
+          <button type="submit" class="action-btn" id="submitButton">Import</button>
+          <button type="button" class="action-btn cancel-btn" id="closeModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

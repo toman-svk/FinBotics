@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinBotics - Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="layout">
+    
+    <!-- 🔴 Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">📊 <strong>FinBotics</strong></div>
+      <ul class="nav">
+        <li><a href="#" class="active">Dashboard</a>
+          <ul class="sub-nav">
+            <li><a href="#">Assets</a></li>
+            <li><a href="#">Liabilities</a></li>
+            <li><a href="#">Profitability</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Benchmarks</a></li>
+        <li><a href="index.html" >Data overview</a></li>
+          <ul class="sub-nav">
+            <li><a href="#">Import</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+        <li class="settings-link"><a href="#">Settings</a></li>
+      </ul>
+      
+    </aside>
+
+    <!-- 🟢 Topbar -->
+    <header class="topbar">
+      <p>...\ Dashboard</p>
+      <div class="action-buttons">
+        <div class="period-toggle">
+            <button class="period-btn" data-period="MTD">MTD</button>
+            <button class="period-btn" data-period="YTD">YTD</button>
+            <button class="period-btn" data-period="1Y">1Y</button>
+            <button class="period-btn active" data-period="ALL">All</button>
+          </div>
+        <button class="action-btn">Import</button>
+        <button class="action-btn">Export</button>
+      </div>
+    </header>
+
+    <!-- 🔵 Main Content -->
+    <main class="main-content">
+        <h1>Dashboard</h1>
+        <div class="chart-grid">
+            <div class="chart-section">
+                <h2 class="chart-title">Profitability</h2>
+                <canvas id="chart1"></canvas>
+              </div>
+          
+              <div class="chart-section">
+                <h2 class="chart-title">Inventories</h2>
+                <canvas id="chart2"></canvas>
+              </div>
+          
+              <div class="chart-section">
+                <h2 class="chart-title">Assets</h2>
+                <canvas id="chart3"></canvas>
+              </div>
+          
+              <div class="chart-section">
+                <h2 class="chart-title">Liabilities</h2>
+                <canvas id="chart4"></canvas>
+              </div>
+        </div>
+    </main>
+
+  </div>
+
+  <div id="modal-container"></div>
+
+
+  <script src="js/view.js"></script> <!-- Needed for setupImportModal and setupFormSubmission -->
+  <script>
+    fetch('partials/importModal.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('modal-container').innerHTML = html;
+        setupImportModal();
+        setupFormSubmission();
+      });
+  </script>
+  
+  <script src="js/dashboard.js"></script>
+
+</body>
+</html>
