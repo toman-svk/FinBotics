@@ -33,7 +33,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const dataFilePath = path.join(__dirname, '../../data/financialAnalysis.json');
+const dataFilePath = path.join(__dirname, 'data', 'financialAnalysis.json');
 
 /**
  * Load all financial analysis records from JSON file.
