@@ -41,6 +41,7 @@ const dataFilePath = path.join(__dirname, 'data', 'financialAnalysis.json');
  */
 function loadFinancialAnalysisData() {
   try {
+    console.log('📄 Loading from:', dataFilePath);
     const jsonData = fs.readFileSync(dataFilePath, 'utf-8');
     return JSON.parse(jsonData);
   } catch (err) {
