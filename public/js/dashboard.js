@@ -6,7 +6,7 @@ let chartInstances = [];
 // Fetch data from backend
 async function fetchFinancialData() {
   try {
-    const response = await fetch('http://localhost:3000/api/financial-analysis');
+    const response = await fetch('/api/financial-analysis');
     if (!response.ok) throw new Error('Failed to fetch data');
     allData = await response.json();
     return allData;
