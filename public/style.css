@@ -365,3 +365,48 @@ table tr:last-child td:last-child {
     padding: 20px;
   }
 }
+
+/* KPI View styling */
+.view-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.toggle-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.toggle-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+#kpi-view {
+  display: none;
+  gap: 1rem;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.kpi-card {
+  background: #f7f7f7;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.kpi-card h3 {
+  margin-top: 0;
+}
+
+.kpi-card p {
+  margin: 0.3rem 0;
+}

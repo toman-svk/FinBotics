@@ -3,6 +3,35 @@ let selectedPeriod = "ALL";
 let chartInstances = [];
 
 
+function renderKPIView(data) {
+  if (data.length === 0) return;
+
+  const latest = data[data.length - 1]; // Use most recent data point
+  const euro = n => parseFloat(n).toLocaleString('en-CH');
+
+  document.getElementById("kpi-current-assets").textContent = euro(latest.current_assets);
+  document.getElementById("kpi-current-liabilities").textContent = euro(latest.current_liabilities);
+  document.getElementById("kpi-current-ratio").textContent = latest.current_ratio.toFixed(2);
+
+  document.getElementById("kpi-revenue").textContent = euro(latest.revenue);
+  document.getElementById("kpi-net-income").textContent = euro(latest.net_income);
+  document.getElementById("kpi-net-margin").textContent = (latest.net_profit_margin * 100).toFixed(1);
+
+  document.getElementById("kpi-equity").textContent = euro(latest.shareholders_equity || latest.total_assets - latest.total_liabilities);
+  document.getElementById("kpi-liabilities").textContent = euro(latest.total_liabilities);
+  const debtEquity = latest.total_liabilities / (latest.shareholders_equity || (latest.total_assets - latest.total_liabilities));
+  document.getElementById("kpi-debt-equity").textContent = debtEquity.toFixed(2);
+
+  document.getElementById("kpi-total-assets").textContent = euro(latest.total_assets);
+  document.getElementById("kpi-roa").textContent = (latest.roa * 100).toFixed(1);
+  document.getElementById("kpi-roe").textContent = (latest.roe * 100).toFixed(1);
+
+  // Fake financial health for demo (can be improved)
+  const healthScore = Math.min(100, Math.round((latest.current_ratio + latest.roa * 100 + latest.roe * 100) / 3));
+  document.getElementById("kpi-health").textContent = `${healthScore}%`;
+}
+
+
 // Fetch data from backend
 async function fetchFinancialData() {
   try {
@@ -51,6 +80,7 @@ async function renderCharts() {
     chartInstances = [];
     
     const data = filterData(allData, selectedPeriod);
+    renderKPIView(data); // 🔹 Update KPI view on every change
 
     // Sort data chronologically
     data.sort((a, b) => new Date(a.period.year, getMonthIndex(a.period.month)) - new Date(b.period.year, getMonthIndex(b.period.month)));
@@ -179,6 +209,27 @@ async function renderCharts() {
 
 }
 
+// Add this for view switching
+function setupViewToggle() {
+  const chartBtn = document.getElementById("chartViewBtn");
+  const kpiBtn = document.getElementById("kpiViewBtn");
+
+  chartBtn.addEventListener("click", () => {
+    chartBtn.classList.add("active");
+    kpiBtn.classList.remove("active");
+    document.getElementById("chart-view").style.display = "grid";
+    document.getElementById("kpi-view").style.display = "none";
+  });
+
+  kpiBtn.addEventListener("click", () => {
+    kpiBtn.classList.add("active");
+    chartBtn.classList.remove("active");
+    document.getElementById("chart-view").style.display = "none";
+    document.getElementById("kpi-view").style.display = "block";
+  });
+}
+
+
 // Setup the period filter buttons
 function setupPeriodButtons() {
   const buttons = document.querySelectorAll('.period-btn');
@@ -197,5 +248,6 @@ function setupPeriodButtons() {
 window.addEventListener('DOMContentLoaded', async () => {
   await fetchFinancialData();
   setupPeriodButtons();
+  setupViewToggle();
   renderCharts();
 });

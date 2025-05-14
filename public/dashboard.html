@@ -41,7 +41,52 @@
     <!-- 🔵 Main Content -->
     <main class="main-content">
         <h1>Dashboard</h1>
-        <div class="chart-grid">
+
+        <div class="view-toggle">
+          <button id="chartViewBtn" class="toggle-btn active">Graph View</button>
+          <button id="kpiViewBtn" class="toggle-btn">KPI View</button>
+        </div>
+
+
+        
+        <h2>Financial Health: <span id="kpi-health"></span></h2>
+
+        <!-- KPI View Section (initially hidden) -->
+        <div id="kpi-view" style="display: none;">
+
+          <div class="kpi-grid"> 
+
+            <div class="kpi-card">
+              <h3>Profitability</h3>
+              <p>Revenues: €<span id="kpi-revenue"></span></p>
+              <p>Net Income: €<span id="kpi-net-income"></span></p>
+              <p>Net Profit Margin: <span id="kpi-net-margin"></span>%</p>
+            </div>
+
+            <div class="kpi-card">
+              <h3>Inventories</h3>
+              <p>Current Assets: €<span id="kpi-current-assets"></span></p>
+              <p>Current Liabilities: €<span id="kpi-current-liabilities"></span></p>
+              <p>Current Ratio: <span id="kpi-current-ratio"></span></p>
+            </div>
+
+            <div class="kpi-card">
+              <h3>Assets</h3>
+              <p>Total Assets: €<span id="kpi-total-assets"></span></p>
+              <p>ROA: <span id="kpi-roa"></span>%</p>
+              <p>ROE: <span id="kpi-roe"></span>%</p>
+            </div>
+
+            <div class="kpi-card">
+              <h3>Liabilities</h3>
+              <p>Shareholders Equity: €<span id="kpi-equity"></span></p>
+              <p>Total Liabilities: €<span id="kpi-liabilities"></span></p>
+              <p>Debt to Equity: <span id="kpi-debt-equity"></span></p>
+            </div>
+          </div>
+        </div>
+
+        <div id="chart-view" class="chart-grid">
             <div class="chart-section">
                 <h2 class="chart-title">Profitability</h2>
                 <canvas id="chart1"></canvas>
