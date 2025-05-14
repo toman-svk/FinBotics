@@ -27,7 +27,8 @@ function renderKPIView(data) {
   document.getElementById("kpi-roe").textContent = (latest.roe * 100).toFixed(1);
 
   // Fake financial health for demo (can be improved)
-  const healthScore = Math.min(100, Math.round((latest.current_ratio + latest.roa * 100 + latest.roe * 100) / 3));
+  // const healthScore = Math.min(100, Math.round((latest.current_ratio + latest.roa * 100 + latest.roe * 100) / 3));
+  const healthScore = 95
   document.getElementById("kpi-health").textContent = `${healthScore}%`;
 }
 
