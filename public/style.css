@@ -185,7 +185,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
   max-width: 100%;        /* Fit within content area */
-
+  margin-top: 1.5rem;
 }
 
 table {
@@ -384,8 +384,17 @@ table tr:last-child td:last-child {
     font-size: 11px;
   }
 
+  /*
   .chart-grid {
-    grid-template-columns: 1fr; /* stack charts vertically */
+    grid-template-columns: 1fr;  stack charts vertically
+  }
+  */
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1 0.5rem;
   }
 
   .modal-content {
@@ -394,14 +403,6 @@ table tr:last-child td:last-child {
   }
 }
 
-
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
 
 .dashboard-cell {
   background-color: #f9f9f9;       /* light grey background */
