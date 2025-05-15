@@ -12,7 +12,10 @@
     
     <!-- 🔴 Sidebar -->
     <aside class="sidebar">
-      <div class="logo">📊 <strong>FinBotics</strong></div>
+      <div class="logo">
+        <img src="/assets/logo.png" alt="FinBotics Logo" style="height: 45px; vertical-align: middle; margin-right: 0px;">
+        <strong>FinBotics</strong>
+      </div>
       <ul class="nav">
         <li><a href="#" class="active">Dashboard</a>
         </li>
@@ -25,7 +28,14 @@
 
     <!-- 🟢 Topbar -->
     <header class="topbar">
-      <p>...\ Dashboard</p>
+      <h1>Dashboard | <span class="health-score">Financial Health: <span id="kpi-health">95%</span></span></h1>
+
+
+      <div class="view-toggle">
+        <button id="chartViewBtn" class="toggle-btn active">Graph View</button>
+        <button id="kpiViewBtn" class="toggle-btn">KPI View</button>
+      </div>
+
       <div class="action-buttons">
         <div class="period-toggle">
             <button class="period-btn" data-period="MTD">MTD</button>
@@ -40,73 +50,65 @@
 
     <!-- 🔵 Main Content -->
     <main class="main-content">
-        <h1>Dashboard</h1>
-
-        <div class="view-toggle">
-          <button id="chartViewBtn" class="toggle-btn active">Graph View</button>
-          <button id="kpiViewBtn" class="toggle-btn">KPI View</button>
-        </div>
-
-
         
-        <h2>Financial Health: <span id="kpi-health"></span></h2>
+        
 
-        <!-- KPI View Section (initially hidden) -->
-        <div id="kpi-view" style="display: none;">
+        <div class="dashboard-grid">
 
-          <div class="kpi-grid"> 
-
-            <div class="kpi-card">
-              <h3>Profitability</h3>
+          <!-- Profitability block -->
+          <div class="dashboard-cell">
+            <h2 class="section-title">Profitability</h2>
+            <div class="graph-section" id="profitability-graph">
+              <canvas id="chart1"></canvas>
+            </div>
+            <div class="kpi-card" id="profitability-kpi">
               <p>Revenues: €<span id="kpi-revenue"></span></p>
               <p>Net Income: €<span id="kpi-net-income"></span></p>
               <p>Net Profit Margin: <span id="kpi-net-margin"></span>%</p>
             </div>
+          </div>
 
-            <div class="kpi-card">
-              <h3>Inventories</h3>
+          <!-- Inventories block -->
+          <div class="dashboard-cell">
+            <h2 class="section-title">Inventories</h2>
+            <div class="graph-section" id="inventories-graph">
+              <canvas id="chart2"></canvas>
+            </div>
+            <div class="kpi-card" id="inventories-kpi">
               <p>Current Assets: €<span id="kpi-current-assets"></span></p>
               <p>Current Liabilities: €<span id="kpi-current-liabilities"></span></p>
               <p>Current Ratio: <span id="kpi-current-ratio"></span></p>
             </div>
+          </div>
 
-            <div class="kpi-card">
-              <h3>Assets</h3>
+          <!-- Assets block -->
+          <div class="dashboard-cell">
+            <h2 class="section-title">Assets</h2>
+            <div class="graph-section" id="assets-graph">
+              <canvas id="chart3"></canvas>
+            </div>
+            <div class="kpi-card" id="assets-kpi">
               <p>Total Assets: €<span id="kpi-total-assets"></span></p>
               <p>ROA: <span id="kpi-roa"></span>%</p>
               <p>ROE: <span id="kpi-roe"></span>%</p>
             </div>
+          </div>
 
-            <div class="kpi-card">
-              <h3>Liabilities</h3>
+          <!-- Liabilities block -->
+          <div class="dashboard-cell">
+            <h2 class="section-title">Liabilities</h2>
+            <div class="graph-section" id="liabilities-graph">
+              <canvas id="chart4"></canvas>
+            </div>
+            <div class="kpi-card" id="liabilities-kpi">
               <p>Shareholders Equity: €<span id="kpi-equity"></span></p>
               <p>Total Liabilities: €<span id="kpi-liabilities"></span></p>
               <p>Debt to Equity: <span id="kpi-debt-equity"></span></p>
             </div>
           </div>
+
         </div>
 
-        <div id="chart-view" class="chart-grid">
-            <div class="chart-section">
-                <h2 class="chart-title">Profitability</h2>
-                <canvas id="chart1"></canvas>
-              </div>
-          
-              <div class="chart-section">
-                <h2 class="chart-title">Inventories</h2>
-                <canvas id="chart2"></canvas>
-              </div>
-          
-              <div class="chart-section">
-                <h2 class="chart-title">Assets</h2>
-                <canvas id="chart3"></canvas>
-              </div>
-          
-              <div class="chart-section">
-                <h2 class="chart-title">Liabilities</h2>
-                <canvas id="chart4"></canvas>
-              </div>
-        </div>
     </main>
 
   </div>

@@ -6,31 +6,47 @@ let chartInstances = [];
 function renderKPIView(data) {
   if (data.length === 0) return;
 
-  const latest = data[data.length - 1]; // Use most recent data point
   const euro = n => parseFloat(n).toLocaleString('en-CH');
+  const sum = (arr, fn) => arr.reduce((acc, cur) => acc + fn(cur), 0);
+  const avg = (arr, fn) => arr.length ? sum(arr, fn) / arr.length : 0;
 
-  document.getElementById("kpi-current-assets").textContent = euro(latest.current_assets);
-  document.getElementById("kpi-current-liabilities").textContent = euro(latest.current_liabilities);
-  document.getElementById("kpi-current-ratio").textContent = latest.current_ratio.toFixed(2);
+  // Averages across period
+  const avgRevenue = avg(data, d => d.revenue);
+  const avgNetIncome = avg(data, d => d.net_income);
+  const avgNetMargin = avg(data, d => d.net_profit_margin) * 100;
 
-  document.getElementById("kpi-revenue").textContent = euro(latest.revenue);
-  document.getElementById("kpi-net-income").textContent = euro(latest.net_income);
-  document.getElementById("kpi-net-margin").textContent = (latest.net_profit_margin * 100).toFixed(1);
+  const avgCurrentAssets = avg(data, d => d.current_assets);
+  const avgCurrentLiabilities = avg(data, d => d.current_liabilities);
+  const avgCurrentRatio = avg(data, d => d.current_ratio);
 
-  document.getElementById("kpi-equity").textContent = euro(latest.shareholders_equity || latest.total_assets - latest.total_liabilities);
-  document.getElementById("kpi-liabilities").textContent = euro(latest.total_liabilities);
-  const debtEquity = latest.total_liabilities / (latest.shareholders_equity || (latest.total_assets - latest.total_liabilities));
-  document.getElementById("kpi-debt-equity").textContent = debtEquity.toFixed(2);
+  const avgTotalAssets = avg(data, d => d.total_assets);
+  const avgROA = avg(data, d => d.roa) * 100;
+  const avgROE = avg(data, d => d.roe) * 100;
 
-  document.getElementById("kpi-total-assets").textContent = euro(latest.total_assets);
-  document.getElementById("kpi-roa").textContent = (latest.roa * 100).toFixed(1);
-  document.getElementById("kpi-roe").textContent = (latest.roe * 100).toFixed(1);
+  const avgEquity = avg(data, d => d.shareholders_equity || (d.total_assets - d.total_liabilities));
+  const avgLiabilities = avg(data, d => d.total_liabilities);
+  const avgDebtToEquity = avgEquity !== 0 ? avgLiabilities / avgEquity : 0;
 
-  // Fake financial health for demo (can be improved)
-  // const healthScore = Math.min(100, Math.round((latest.current_ratio + latest.roa * 100 + latest.roe * 100) / 3));
-  const healthScore = 95
-  document.getElementById("kpi-health").textContent = `${healthScore}%`;
+  // DOM Updates
+  document.getElementById("kpi-revenue").textContent = euro(avgRevenue);
+  document.getElementById("kpi-net-income").textContent = euro(avgNetIncome);
+  document.getElementById("kpi-net-margin").textContent = avgNetMargin.toFixed(1);
+
+  document.getElementById("kpi-current-assets").textContent = euro(avgCurrentAssets);
+  document.getElementById("kpi-current-liabilities").textContent = euro(avgCurrentLiabilities);
+  document.getElementById("kpi-current-ratio").textContent = avgCurrentRatio.toFixed(2);
+
+  document.getElementById("kpi-total-assets").textContent = euro(avgTotalAssets);
+  document.getElementById("kpi-roa").textContent = avgROA.toFixed(1);
+  document.getElementById("kpi-roe").textContent = avgROE.toFixed(1);
+
+  document.getElementById("kpi-shareholders-equity").textContent = euro(avgEquity);
+  document.getElementById("kpi-total-liabilities").textContent = euro(avgLiabilities);
+  document.getElementById("kpi-debt-to-equity").textContent = avgDebtToEquity.toFixed(2);
+
+
 }
+
 
 
 // Fetch data from backend
@@ -75,18 +91,14 @@ function filterData(data, period) {
 }
 
 // Render all 4 charts
-async function renderCharts() {
+async function renderCharts(data) {
 
     chartInstances.forEach(chart => chart.destroy());
     chartInstances = [];
     
-    const data = filterData(allData, selectedPeriod);
-    renderKPIView(data); // 🔹 Update KPI view on every change
-
     // Sort data chronologically
     data.sort((a, b) => new Date(a.period.year, getMonthIndex(a.period.month)) - new Date(b.period.year, getMonthIndex(b.period.month)));
 
-    // old const labels = data.map(item => `${item.period.month} ${item.period.year}`);
     const labels = data.map(item => {
         const monthAbbr = item.period.month.slice(0, 3); // "Jan", "Feb", ...
         const yearShort = item.period.year.toString().slice(-2); // "23"
@@ -106,8 +118,6 @@ async function renderCharts() {
 
     const totalLiabilities = data.map(item => item.total_liabilities);
     const roe = data.map(item => item.roe * 100);
-
-    
 
     const configs = [
         {
@@ -210,25 +220,26 @@ async function renderCharts() {
 
 }
 
-// Add this for view switching
 function setupViewToggle() {
-  const chartBtn = document.getElementById("chartViewBtn");
-  const kpiBtn = document.getElementById("kpiViewBtn");
+  const chartViewBtn = document.getElementById("chartViewBtn");
+  const kpiViewBtn = document.getElementById("kpiViewBtn");
+  const dashboard = document.querySelector(".dashboard-grid");
 
-  chartBtn.addEventListener("click", () => {
-    chartBtn.classList.add("active");
-    kpiBtn.classList.remove("active");
-    document.getElementById("chart-view").style.display = "grid";
-    document.getElementById("kpi-view").style.display = "none";
+  chartViewBtn.addEventListener("click", () => {
+    dashboard.classList.add("show-graph");
+    dashboard.classList.remove("show-kpi");
+    chartViewBtn.classList.add("active");
+    kpiViewBtn.classList.remove("active");
   });
 
-  kpiBtn.addEventListener("click", () => {
-    kpiBtn.classList.add("active");
-    chartBtn.classList.remove("active");
-    document.getElementById("chart-view").style.display = "none";
-    document.getElementById("kpi-view").style.display = "block";
+  kpiViewBtn.addEventListener("click", () => {
+    dashboard.classList.add("show-kpi");
+    dashboard.classList.remove("show-graph");
+    kpiViewBtn.classList.add("active");
+    chartViewBtn.classList.remove("active");
   });
 }
+
 
 
 // Setup the period filter buttons
@@ -240,9 +251,19 @@ function setupPeriodButtons() {
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       selectedPeriod = btn.dataset.period;
-      renderCharts();
+      renderAllData();
     });
   });
+}
+
+
+function renderAllData() {
+  const data = filterData(allData, selectedPeriod);
+  renderCharts(data);
+  renderKPIView(data);
+
+  
+
 }
 
 // Init on page load
@@ -250,5 +271,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   await fetchFinancialData();
   setupPeriodButtons();
   setupViewToggle();
-  renderCharts();
+  document.querySelector('.dashboard-grid').classList.add('show-graph');
+  document.getElementById("kpi-health").textContent = "95%";
+  renderAllData();
 });
