@@ -23,10 +23,10 @@ body {
 .sidebar {
   grid-area: sidebar;
   background-color: #F8F8F7;  
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
   border-right: 1px solid #ddd;
 }
 
@@ -37,6 +37,10 @@ body {
   margin-top: -10px; 
 }
 
+.sidebar-toggle {
+  display: none; /* Hidden by default (desktop) */
+}
+
 .nav {
   display: flex;
   flex-direction: column;
@@ -45,6 +49,11 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.sidebar-nav {
+  margin-top: 20px;
+}
+
 
 .nav li {
   margin-bottom: 10px;
@@ -338,15 +347,65 @@ table tr:last-child td:last-child {
   .layout {
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    max-width: 100%;
   }
 
   .sidebar {
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 10px;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
-    overflow-x: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+    z-index: 1000;
+    margin: 0;
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .sidebar-nav {
+    position: absolute;
+    top: 6vh; /* below the fixed topbar */
+    left: 0;
+    width: 100%;
+    margin: 0;
+    background-color: #f8f8f8;
+    display: none;
+    flex-direction: column;
+    padding: 0 0.5rem;
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .sidebar-nav.open {
+    display: flex;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav li {
+    margin: 0;
+  }
+
+  .sidebar-toggle {
+  display: block;       /* Show on mobile */
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
   }
 
   .sidebar .logo {
@@ -355,25 +414,18 @@ table tr:last-child td:last-child {
     margin-top: 0;
   }
 
-  .nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .nav li {
-    margin: 0;
-  }
 
   .topbar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    margin-top: 5.5vh;
+    gap: 7px;
     padding: 15px;
   }
 
   .main-content {
-    padding: 10px;
+    padding: 1rem;
+    width: 100%;
   }
 
   .table-wrapper {
@@ -384,11 +436,6 @@ table tr:last-child td:last-child {
     font-size: 11px;
   }
 
-  /*
-  .chart-grid {
-    grid-template-columns: 1fr;  stack charts vertically
-  }
-  */
 
   .dashboard-grid {
     display: grid;
